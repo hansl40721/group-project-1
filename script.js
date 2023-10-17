@@ -1,3 +1,4 @@
+
 const searchButton = document.getElementById('searchButton');
         const movieSearch = document.getElementById('movieSearch');
         const movieResults = document.getElementById('movieResults');
@@ -5,11 +6,13 @@ const searchButton = document.getElementById('searchButton');
         searchButton.addEventListener('click', () => {
 
             const apiKey = '820b9eeb';
+            
 
             fetch(`https://www.omdbapi.com/?s=${movieSearch.value}&apikey=${apiKey}`)
                 .then(response => response.json())
                 .then(data => {
                     if (data.Response === "True") {
+                        console.log(data);
 
                         movieResults.innerHTML = '';
                         
