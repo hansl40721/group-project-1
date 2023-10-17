@@ -1,3 +1,4 @@
+
 const searchButton = document.getElementById('searchButton');
         const movieSearch = document.getElementById('movieSearch');
         const movieResults = document.getElementById('movieResults');
