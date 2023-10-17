@@ -18,13 +18,23 @@ const searchButton = document.getElementById('searchButton');
                         
                         data.Search.forEach(movie => {
                             const movieElement = document.createElement('div');
-                         movieElement.innerHTML = `
-                <h2>${movie.Title}</h2>
-                     <img src="${movie.Poster}" alt="${movie.Title} Poster">
-                    <p>Year: ${movie.Year}</p>
-                    <p>Type: ${movie.Type}</p>
-                            <p>IMDb ID: ${movie.imdbID}</p>
-                           `;
+                         movieElement.innerHTML = `<div class="col-12 col-lg-2">
+                         <div class="card">
+                         <div class="card-body">
+                         <h5 class="card-title">${movie.Title}</h5>
+                             <img class="card-img-top" src="${movie.Poster}" alt="${movie.Title} Poster">
+                             <p class="card-text">${movie.Year}</p>
+                             <p class="card-text">${movie.Type}</p>
+                           </div>
+                         </div>
+                       </div>`;
+                //          `
+                // <h2>${movie.Title}</h2>
+                //      <img src="${movie.Poster}" alt="${movie.Title} Poster">
+                //     <p>Year: ${movie.Year}</p>
+                //     <p>Type: ${movie.Type}</p>
+                //             <p>IMDb ID: ${movie.imdbID}</p>
+                //            `;
     movieResults.appendChild(movieElement);
 });
 
