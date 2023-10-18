@@ -1,9 +1,10 @@
 
 const searchButton = document.getElementById('searchButton');
-const movieSearch = document.getElementById('movieSearch');
-const movieResults = document.getElementById('movieResults');
+        const movieSearch = document.getElementById('movieSearch');
+        const movieResults = document.getElementById('movieResults');
+        
 
-searchButton.addEventListener('click', () => {
+        searchButton.addEventListener('click', () => {
 
     const apiKey = '820b9eeb';
 
@@ -14,12 +15,13 @@ searchButton.addEventListener('click', () => {
             if (data.Response === "True") {
                 console.log(data);
 
-                movieResults.innerHTML = '';
-
-                data.Search.forEach(movie => {
-                    const movieElement = document.createElement('div');
-                    movieElement.innerHTML = `<div class="col-12 col-lg-2">
-                         <div class="card">
+                        movieResults.innerHTML = '';
+                        
+                        data.Search.forEach(movie => {
+                        const movieElement = document.createElement('div');
+                        movieElement.setAttribute("class", "col-4");
+                         movieElement.innerHTML = `
+                         <div class="card mt-5">
                          <div class="card-body">
                          <h5 class="card-title">${movie.Title}</h5>
                              <img class="card-img-top" src="${movie.Poster}" alt="${movie.Title} Poster">
