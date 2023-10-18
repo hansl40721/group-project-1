@@ -41,3 +41,6 @@ const searchButton = document.getElementById('searchButton');
             console.error('Error:', error);
         });
 });
+
+localStorage.setItem("movieSearch", "Hulk");
+document.getElementById("movieSearch").innerHTML = localStorage.getItem("movieSearch");
