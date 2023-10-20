@@ -3,7 +3,40 @@ const searchButton = document.getElementById('searchButton');
 const movieSearch = document.getElementById('movieSearch');
 const movieResults = document.getElementById('movieResults');
 const container = document.getElementById('forModal');
+var buttonContainerEl = document.getElementById('buttonContainer');
+var clearButton = document.getElementById('clearBtn');
 const apiKey = '820b9eeb';
+
+var searched = [];
+
+function storeSearch() {
+    // Saving to local storage
+    localStorage.setItem("searched", JSON.stringify(searched));
+  }
+
+  function init() {
+    
+    var storedSearch = JSON.parse(localStorage.getItem("searched"));
+  
+    if (storedSearch !== null) {
+      searched = storedSearch;
+    }
+  renderStoredSearches();
+  }
+
+  function renderStoredSearches() {
+    for (var i = 0; i < searched.length; i++) {
+      var searchedMovie = searched[i];
+
+      var movieSearchButton = document.createElement('div');
+      movieSearchButton.setAttribute("class", "col-3");
+    movieSearchButton.innerHTML = `<button type="button" class="btn btn-secondary 
+    btn-block mt-1 previousCity">${searchedMovie}</button>`;
+  
+    document.body.append(movieSearchButton);
+    }
+
+  }
 
 function searchHandler(event) {
 
@@ -123,11 +156,27 @@ function previousSearch(data) {
   btn-block mt-1" id="previous">${movieSearch.value}</button>`;
   document.body.append(previousSearchButton);
   previousSearchButton.addEventListener("click", searchHandler);
+
+  searched.push(movieSearch.value);
+  storeSearch();
+  console.log(searched);
 }
 
-localStorage.setItem("movieSearch", "Hulk");
-document.getElementById("movieSearch").innerHTML = localStorage.getItem("movieSearch");
+function clearButtonHandler() {
+    console.log("Ran");
+    // Clears local storage
+    window.localStorage.clear();
+  
+    // Clears the buttons
+    buttonContainerEl.innerHTML = '';
+  
+    searched = [];
+  }
 
 searchButton.addEventListener('click', searchHandler);
 movieResults.addEventListener("click", movieDetail);
 forModal.addEventListener("click", disposeModal);
+clearButton.addEventListener('click', clearButtonHandler);
+
+
+init();
