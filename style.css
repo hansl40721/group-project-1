@@ -41,7 +41,7 @@ h2 {
     color: #000; 
 }
 
-main {
+#searchContainer {
     padding: 20px;
     color: #000;
     background: #33CCCC;
@@ -94,4 +94,8 @@ button:hover {
 
 .card-button:hover {
     background-color: rgb(151, 151, 151);
+}
+
+.modal-open {
+    overflow: scroll;
 }
