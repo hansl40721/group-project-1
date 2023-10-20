@@ -11,9 +11,9 @@ function searchHandler(event) {
     if (event.target.matches(".bi-search") || event.target.matches("#searchButton")) {
         value = movieSearch.value;
     } else {
-        value = event;
+        value = event.target.textContent;
     }
-
+  
     fetch(`https://www.omdbapi.com/?s=${value}&apikey=${apiKey}`)
         .then(response => response.json())
         .then(data => {
@@ -38,7 +38,7 @@ function searchHandler(event) {
                        </div>`;
                     movieResults.appendChild(movieElement);
                 });
-
+                previousSearch(data);
             } else {
                 movieResults.innerHTML = '<p>No results found.</p>';
             }
@@ -114,10 +114,16 @@ function disposeModal(event) {
     }
 }
 
-$('.modal').on('hidden.bs.modal', function () {
-    console.log('IT IS HIDDEN!')
-  }); 
-
+function previousSearch(data) {
+    // Issue: If button is clicked, another previous search is appended.
+    console.log(data);
+    var previousSearchButton = document.createElement('div');
+    previousSearchButton.setAttribute("class", "col-3");
+    previousSearchButton.innerHTML = `<button type="button" class="btn btn-secondary 
+  btn-block mt-1" id="previous">${movieSearch.value}</button>`;
+  document.body.append(previousSearchButton);
+  previousSearchButton.addEventListener("click", searchHandler);
+}
 
 localStorage.setItem("movieSearch", "Hulk");
 document.getElementById("movieSearch").innerHTML = localStorage.getItem("movieSearch");
