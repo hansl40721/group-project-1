@@ -5,6 +5,7 @@ const movieResults = document.getElementById('movieResults');
 const container = document.getElementById('forModal');
 var buttonContainerEl = document.getElementById('buttonContainer');
 var clearButton = document.getElementById('clearBtn');
+var previousSearchEl = document.getElementById('previousSearch');
 const apiKey = '820b9eeb';
 
 var searched = [];
@@ -33,7 +34,7 @@ function storeSearch() {
     movieSearchButton.innerHTML = `<button type="button" class="btn btn-secondary 
     btn-block mt-1 previousCity">${searchedMovie}</button>`;
   
-    document.body.append(movieSearchButton);
+    buttonContainerEl.append(movieSearchButton);
     }
 
   }
@@ -85,7 +86,9 @@ function movieDetail(event) {
     let value;
 
     if (event.target.matches("button")) {
+        console.log(this.textContent);
         value = event.target.previousElementSibling.previousElementSibling.previousElementSibling.textContent;
+        // value = this.textContent;
         console.log('hello')
     } else {
         value = "";
@@ -147,28 +150,38 @@ function disposeModal(event) {
     }
 }
 
+
 function previousSearch(data) {
-    // Issue: If button is clicked, another previous search is appended.
     console.log(data);
+    // If this search already exists, don't append again.
+    if (searched.includes(movieSearch.value)) {
+        return;
+    }
+    else {    
     var previousSearchButton = document.createElement('div');
     previousSearchButton.setAttribute("class", "col-3");
     previousSearchButton.innerHTML = `<button type="button" class="btn btn-secondary 
   btn-block mt-1" id="previous">${movieSearch.value}</button>`;
-  document.body.append(previousSearchButton);
+  previousSearchEl.append(previousSearchButton);
+  console.log(buttonContainerEl);
   previousSearchButton.addEventListener("click", searchHandler);
 
   searched.push(movieSearch.value);
   storeSearch();
   console.log(searched);
+    }
 }
+console.log(buttonContainerEl);
 
 function clearButtonHandler() {
     console.log("Ran");
     // Clears local storage
     window.localStorage.clear();
-  
+    
     // Clears the buttons
     buttonContainerEl.innerHTML = '';
+    previousSearchEl.innerHTML = '';
+    // location.reload();
   
     searched = [];
   }
