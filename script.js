@@ -8,8 +8,6 @@ var buttonContainerEl = document.getElementById('buttonContainer');
 var clearButton = document.getElementById('clearBtn');
 var previousSearchEl = document.getElementById('previousSearch');
 const apiKey = '820b9eeb';
-import { articleSearchHandler } from "./articlescript";
-
 
 var searched = [];
 let value;
@@ -44,7 +42,7 @@ function renderStoredSearches() {
 
 function searchHandler(event) {
   if (
-    event.target.matches(".bi-search") ||
+    event.target.matches("#searchIcon") ||
     event.target.matches("#searchButton")
   ) {
     value = movieSearch.value.trim();
@@ -125,8 +123,7 @@ function movieDetail(event) {
                                     <p class="card-text">Box Office: ${data.BoxOffice}</p>
                                     <p class="card-text">Plot: ${data.Plot}</p>
                                     <p class="card-text">IMDb Rating: ${data.imdbRating}</p>
-                                <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" id="findReviews">Find Reviews</button>    
+                                <div class="modal-footer">  
                                 <button type="button" class="btn btn-secondary" id="closeModalBottom" data-dismiss="modal">Close</button>
                                 </div>
                             </div>
@@ -190,6 +187,5 @@ searchButton.addEventListener("click", searchHandler);
 movieResults.addEventListener("click", movieDetail);
 forModal.addEventListener("click", disposeModal);
 clearButton.addEventListener('click', clearButtonHandler);
-
 
 init();
