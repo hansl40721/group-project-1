@@ -80,7 +80,10 @@ button:hover {
 .card-body:hover {
     box-shadow: inset 0px 0px 8px rgba(0, 0, 0, 0.8), 0 0 15px rgba(0, 0, 0, 0.8);
 }
-
+.card-img-top {
+    max-width: 100%;
+    max-height: 90%;
+}
 .card-button {
     display: block;
     margin-right: auto;
@@ -95,6 +98,3 @@ button:hover {
 .modal-open {
     overflow: scroll;
 }
-
-/* search cards different sizes image of the poster
-search doesnt ignore white space (end white space)
