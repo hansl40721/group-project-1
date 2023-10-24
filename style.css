@@ -1,6 +1,5 @@
 
 body {
-    background: #33CCCC; 
     color: #000; 
     font-family: "Arial", sans-serif;
     margin: 0;
@@ -11,7 +10,6 @@ header {
     background-color: #000; 
     text-align: center;
     padding: 10px 0;
-    border-top: 5px solid #f5c518; 
 }
 
 h1 {
@@ -35,7 +33,10 @@ h2 {
 #searchContainer {
     padding: 20px;
     color: #000;
-    background: #33CCCC;
+}
+
+#forModal {
+    width: 100%;
 }
 
 label {
@@ -52,18 +53,16 @@ input[type="text"] {
 }
 
 button {
-    background-color: #f5c518; 
     color: #000; 
     padding: 12px 24px; 
     border: none;
     cursor: pointer;
 }
-
-button:hover {
-    background-color: #d4aa00; 
+#movieResults {
+    margin-top: 20px;
 }
 
-#movieResults {
+#articleResults {
     margin-top: 20px;
 }
 
@@ -90,6 +89,7 @@ button:hover {
     max-height: 90%;
 }
 .card-button {
+    color: black;
     display: block;
     margin-right: auto;
     margin-left: auto;
@@ -99,6 +99,10 @@ button:hover {
 
 .card-button:hover {
     background-color: rgb(151, 151, 151);
+}
+
+.card-button a {
+    color: black;
 }
 
 .modal-open {
