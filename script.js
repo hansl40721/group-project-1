@@ -2,6 +2,8 @@ const searchButton = document.getElementById("searchButton");
 const movieSearch = document.getElementById("movieSearch");
 const movieResults = document.getElementById("movieResults");
 const container = document.getElementById("forModal");
+const articleSearch = document.getElementById("articleSearch");
+const nytKey = "l0OYvX9jhHcrYsBafJAYDjT66E0qCkLN";
 var buttonContainerEl = document.getElementById("buttonContainer");
 var clearButton = document.getElementById("clearBtn");
 var previousSearchEl = document.getElementById("previousSearch");
@@ -126,6 +128,7 @@ function movieDetail(event) {
                                     <p class="card-text">Plot: ${data.Plot}</p>
                                     <p class="card-text">IMDb Rating: ${data.imdbRating}</p>
                                 <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" id="closeModalBottom">Find Reviews</button>
                                     <button type="button" class="btn btn-secondary" id="closeModalBottom" data-dismiss="modal">Close</button>
                                 </div>
                             </div>
@@ -136,6 +139,30 @@ function movieDetail(event) {
     })
     .catch((error) => {
       console.error("Error:", error);
+    });
+}
+
+function articleSearchHandler(event) {
+    let value;
+
+    if(event.target.matches("#articleSearchButton") || event.target.matches(".bi-search")) {
+        console.log("hello");
+        value = articleSearch.value.trim();
+    } else if(event.target.matches("#findReviews")) {
+        // need to figure this one out
+    } else {
+        value = "";
+    }
+
+    fetch(`https://api.nytimes.com/svc/search/v2/articlesearch.json?q=${value}&fq=news_desk:("Movies")&api-key=${nytKey}`)
+    .then((response) => response.json)
+    .then((data) => {
+        if(data.Response === "True") {
+            console.log(data);
+        }
+    })
+    .catch((error) => {
+        console.error("Error:", error);
     });
 }
 
