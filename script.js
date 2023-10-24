@@ -8,8 +8,6 @@ var buttonContainerEl = document.getElementById('buttonContainer');
 var clearButton = document.getElementById('clearBtn');
 var previousSearchEl = document.getElementById('previousSearch');
 const apiKey = '820b9eeb';
-import { articleSearchHandler } from "./articlescript";
-
 
 var searched = [];
 let value;
@@ -44,7 +42,7 @@ function renderStoredSearches() {
 
 function searchHandler(event) {
   if (
-    event.target.matches(".bi-search") ||
+    event.target.matches("#searchIcon") ||
     event.target.matches("#searchButton")
   ) {
     value = movieSearch.value.trim();
@@ -190,6 +188,5 @@ searchButton.addEventListener("click", searchHandler);
 movieResults.addEventListener("click", movieDetail);
 forModal.addEventListener("click", disposeModal);
 clearButton.addEventListener('click', clearButtonHandler);
-
 
 init();
