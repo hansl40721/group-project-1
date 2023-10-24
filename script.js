@@ -123,8 +123,7 @@ function movieDetail(event) {
                                     <p class="card-text">Box Office: ${data.BoxOffice}</p>
                                     <p class="card-text">Plot: ${data.Plot}</p>
                                     <p class="card-text">IMDb Rating: ${data.imdbRating}</p>
-                                <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" id="findReviews">Find Reviews</button>    
+                                <div class="modal-footer">  
                                 <button type="button" class="btn btn-secondary" id="closeModalBottom" data-dismiss="modal">Close</button>
                                 </div>
                             </div>
