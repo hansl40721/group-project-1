@@ -77,6 +77,11 @@ button:hover {
     height: 92% 
 }
 
+.card-body {
+    display: flex;
+    flex-direction: column;
+}
+
 .card-body:hover {
     box-shadow: inset 0px 0px 8px rgba(0, 0, 0, 0.8), 0 0 15px rgba(0, 0, 0, 0.8);
 }
@@ -89,6 +94,7 @@ button:hover {
     margin-right: auto;
     margin-left: auto;
     background-color: gray;
+    margin-top: auto;
 }
 
 .card-button:hover {
