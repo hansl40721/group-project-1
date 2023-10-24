@@ -1,12 +1,16 @@
 
 const searchButton = document.getElementById('searchButton');
 const movieSearch = document.getElementById('movieSearch');
+const articleSearch = document.getElementById('articleSearch');
 const movieResults = document.getElementById('movieResults');
+const findReviewsButton = document.getElementById('findReviews');
+const articleSearchButton = document.getElementById('articleSearchButton');
 const container = document.getElementById('forModal');
 var buttonContainerEl = document.getElementById('buttonContainer');
 var clearButton = document.getElementById('clearBtn');
 var previousSearchEl = document.getElementById('previousSearch');
 const apiKey = '820b9eeb';
+const nytKey = 'l0OYvX9jhHcrYsBafJAYDjT66E0qCkLN';
 
 var searched = [];
 
@@ -86,10 +90,8 @@ function movieDetail(event) {
     let value;
 
     if (event.target.matches("button")) {
-        console.log(this.textContent);
         value = event.target.previousElementSibling.previousElementSibling.previousElementSibling.textContent;
         // value = this.textContent;
-        console.log('hello')
     } else {
         value = "";
     }
@@ -124,7 +126,8 @@ function movieDetail(event) {
                                     <p class="card-text">Plot: ${data.Plot}</p>
                                     <p class="card-text">IMDb Rating: ${data.imdbRating}</p>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" id="closeModalBottom" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-secondary" id="findReviews">Find Reviews</button>    
+                                <button type="button" class="btn btn-secondary" id="closeModalBottom" data-dismiss="modal">Close</button>
                                 </div>
                             </div>
                     </div>`
@@ -135,6 +138,29 @@ function movieDetail(event) {
         .catch(error => {
             console.error('Error:', error);
         });
+}
+
+function articleSearchHandler(event) {
+    let value;
+    if(event.target.matches("#articleSearchButton") || event.target.matches(".bi-search")) {
+        console.log("hello");
+        value = articleSearch.value;
+    } else if (event.target.matches("#findReviews")) {
+        value = $("div.modal fade:contains(h5)")
+    } else {
+        value = "";
+    }
+
+    fetch(`https://api.nytimes.com/svc/search/v2/articlesearch.json?q=${value}&fq=news_desk:("Movies")&api-key=${nytKey}`)
+    .then(response => response.json())
+    .then(data => {
+        if(data.response === "True") {
+            console.log(data);
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    })
 }
 
 function toggleModal() {
@@ -190,6 +216,9 @@ searchButton.addEventListener('click', searchHandler);
 movieResults.addEventListener("click", movieDetail);
 forModal.addEventListener("click", disposeModal);
 clearButton.addEventListener('click', clearButtonHandler);
+forModal.addEventListener("click", articleSearchHandler);
+articleSearchButton.addEventListener("click", articleSearchHandler);
+
 
 
 init();
