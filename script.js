@@ -1,65 +1,66 @@
-
-const searchButton = document.getElementById('searchButton');
-const movieSearch = document.getElementById('movieSearch');
-const movieResults = document.getElementById('movieResults');
-const container = document.getElementById('forModal');
-var buttonContainerEl = document.getElementById('buttonContainer');
-var clearButton = document.getElementById('clearBtn');
-var previousSearchEl = document.getElementById('previousSearch');
-const apiKey = '820b9eeb';
+const searchButton = document.getElementById("searchButton");
+const movieSearch = document.getElementById("movieSearch");
+const movieResults = document.getElementById("movieResults");
+const container = document.getElementById("forModal");
+var buttonContainerEl = document.getElementById("buttonContainer");
+var clearButton = document.getElementById("clearBtn");
+var previousSearchEl = document.getElementById("previousSearch");
+const apiKey = "820b9eeb";
 
 var searched = [];
+let value;
 
 function storeSearch() {
-    // Saving to local storage
-    localStorage.setItem("searched", JSON.stringify(searched));
-  }
+  // Saving to local storage
+  localStorage.setItem("searched", JSON.stringify(searched));
+}
 
-  function init() {
-    
-    var storedSearch = JSON.parse(localStorage.getItem("searched"));
-  
-    if (storedSearch !== null) {
-      searched = storedSearch;
-    }
+function init() {
+  var storedSearch = JSON.parse(localStorage.getItem("searched"));
+
+  if (storedSearch !== null) {
+    searched = storedSearch;
+  }
   renderStoredSearches();
-  }
+}
 
-  function renderStoredSearches() {
-    for (var i = 0; i < searched.length; i++) {
-      var searchedMovie = searched[i];
+function renderStoredSearches() {
+  for (var i = 0; i < searched.length; i++) {
+    var searchedMovie = searched[i];
 
-      var movieSearchButton = document.createElement('div');
-      movieSearchButton.setAttribute("class", "col-3");
+    var movieSearchButton = document.createElement("div");
+    movieSearchButton.setAttribute("class", "col-3");
     movieSearchButton.innerHTML = `<button type="button" class="btn btn-secondary 
-    btn-block mt-1 previousCity">${searchedMovie}</button>`;
-  
-    buttonContainerEl.append(movieSearchButton);
-    }
+    btn-block mt-1">${searchedMovie}</button>`;
 
+    buttonContainerEl.append(movieSearchButton);
+    movieSearchButton.addEventListener("click", searchHandler);
   }
+}
 
 function searchHandler(event) {
+  if (
+    event.target.matches(".bi-search") ||
+    event.target.matches("#searchButton")
+  ) {
+    value = movieSearch.value.trim();
+  } else {
+    value = event.target.textContent.trim();
+    console.log(event.target.textContent);
+  }
 
-    let value
-    if (event.target.matches(".bi-search") || event.target.matches("#searchButton")) {
-        value = movieSearch.value;
-    } else {
-        value = event.target.textContent;
-    }
-  
-    fetch(`https://www.omdbapi.com/?s=${value}&apikey=${apiKey}`)
-        .then(response => response.json())
-        .then(data => {
-            if (data.Response === "True") {
-                console.log(data);
+  fetch(`https://www.omdbapi.com/?s=${value}&apikey=${apiKey}`)
+    .then((response) => response.json())
+    .then((data) => {
+      if (data.Response === "True") {
+        console.log(data);
 
-                movieResults.innerHTML = '';
+        movieResults.innerHTML = "";
 
-                data.Search.forEach(movie => {
-                    const movieElement = document.createElement('div');
-                    movieElement.setAttribute("class", "col-4");
-                    movieElement.innerHTML = `
+        data.Search.forEach((movie) => {
+          const movieElement = document.createElement("div");
+          movieElement.setAttribute("class", "col-4");
+          movieElement.innerHTML = `
                          <div class="card mt-5">
                          <div class="card-body">
                          <h5 class="card-title">${movie.Title}</h5>
@@ -70,45 +71,46 @@ function searchHandler(event) {
                            </div>
                          </div>
                        </div>`;
-                    movieResults.appendChild(movieElement);
-                });
-                previousSearch(data);
-            } else {
-                movieResults.innerHTML = '<p>No results found.</p>';
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
+          movieResults.appendChild(movieElement);
         });
+        previousSearch(data);
+      } else {
+        movieResults.innerHTML = "<p>No results found.</p>";
+      }
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
 }
 
 function movieDetail(event) {
-    let value;
+  let value;
 
-    if (event.target.matches("button")) {
-        console.log(this.textContent);
-        value = event.target.previousElementSibling.previousElementSibling.previousElementSibling.textContent;
-        // value = this.textContent;
-        console.log('hello')
-    } else {
-        value = "";
-    }
+  if (event.target.matches("button")) {
+    console.log(this.textContent);
+    value =
+      event.target.previousElementSibling.previousElementSibling
+        .previousElementSibling.textContent;
+    // value = this.textContent;
+    console.log("hello");
+  } else {
+    value = "";
+  }
 
-    fetch(`https://www.omdbapi.com/?apikey=${apiKey}&t=${value}`)
-        .then(response => response.json())
-        .then(data => {
-            if (data.Response === "True") {
-                console.log(data);
+  fetch(`https://www.omdbapi.com/?apikey=${apiKey}&t=${value}`)
+    .then((response) => response.json())
+    .then((data) => {
+      if (data.Response === "True") {
+        console.log(data);
 
-                const seeMoreModal = document.createElement('div');
-                seeMoreModal.setAttribute("class", "modal fade");
-                seeMoreModal.setAttribute("id", "seeMoreModal");
-                seeMoreModal.setAttribute("tabindex", "-1");
-                seeMoreModal.setAttribute("role", "dialog");
-                seeMoreModal.setAttribute("aria-labelledby", "modalLabel");
-                seeMoreModal.setAttribute("aria-hidden", "true");
-                seeMoreModal.innerHTML =
-                    `<div class="modal-dialog modal-dialog-ceneterd" role="document">
+        const seeMoreModal = document.createElement("div");
+        seeMoreModal.setAttribute("class", "modal fade");
+        seeMoreModal.setAttribute("id", "seeMoreModal");
+        seeMoreModal.setAttribute("tabindex", "-1");
+        seeMoreModal.setAttribute("role", "dialog");
+        seeMoreModal.setAttribute("aria-labelledby", "modalLabel");
+        seeMoreModal.setAttribute("aria-hidden", "true");
+        seeMoreModal.innerHTML = `<div class="modal-dialog modal-dialog-ceneterd" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
                                 <h4 class="card-title" id="modalLabel">${data.Title} (${data.Year} ${data.Genre})</h4>
@@ -127,69 +129,67 @@ function movieDetail(event) {
                                     <button type="button" class="btn btn-secondary" id="closeModalBottom" data-dismiss="modal">Close</button>
                                 </div>
                             </div>
-                    </div>`
-                container.prepend(seeMoreModal);
-                toggleModal();
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
+                    </div>`;
+        container.prepend(seeMoreModal);
+        toggleModal();
+      }
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
 }
 
 function toggleModal() {
-    $('#seeMoreModal').modal('toggle');
+  $("#seeMoreModal").modal("toggle");
 }
 
 function disposeModal(event) {
-    if (event.target.matches("#closeModalBottom")) {
-        $("#seeMoreModal").remove();
-        $('.modal-backdrop').remove();
-        $('body').removeClass('modal fade');
-        document.querySelector(".modal-open").style.overflow = "scroll";
-    }
+  if (event.target.matches("#closeModalBottom")) {
+    $("#seeMoreModal").remove();
+    $(".modal-backdrop").remove();
+    $("body").removeClass("modal fade");
+    document.querySelector(".modal-open").style.overflow = "scroll";
+  }
 }
 
-
 function previousSearch(data) {
-    console.log(data);
-    // If this search already exists, don't append again.
-    if (searched.includes(movieSearch.value)) {
-        return;
-    }
-    else {    
-    var previousSearchButton = document.createElement('div');
+  console.log(data);
+  console.log(value);
+  // If this search already exists, don't append again.
+  if (searched.includes(value)) {
+    return;
+  } else {
+    var previousSearchButton = document.createElement("div");
     previousSearchButton.setAttribute("class", "col-3");
     previousSearchButton.innerHTML = `<button type="button" class="btn btn-secondary 
-  btn-block mt-1" id="previous">${movieSearch.value}</button>`;
-  previousSearchEl.append(previousSearchButton);
-  console.log(buttonContainerEl);
-  previousSearchButton.addEventListener("click", searchHandler);
+  btn-block mt-1" id="previous">${value}</button>`;
+    previousSearchEl.append(previousSearchButton);
+    console.log(buttonContainerEl);
+    previousSearchButton.addEventListener("click", searchHandler);
 
-  searched.push(movieSearch.value);
-  storeSearch();
-  console.log(searched);
-    }
+    searched.push(value);
+    storeSearch();
+    console.log(searched);
+  }
 }
 console.log(buttonContainerEl);
 
 function clearButtonHandler() {
-    console.log("Ran");
-    // Clears local storage
-    window.localStorage.clear();
-    
-    // Clears the buttons
-    buttonContainerEl.innerHTML = '';
-    previousSearchEl.innerHTML = '';
-    // location.reload();
-  
-    searched = [];
-  }
+  console.log("Ran");
+  // Clears local storage
+  window.localStorage.clear();
 
-searchButton.addEventListener('click', searchHandler);
+  // Clears the buttons
+  buttonContainerEl.innerHTML = "";
+  previousSearchEl.innerHTML = "";
+  // location.reload();
+
+  searched = [];
+}
+
+searchButton.addEventListener("click", searchHandler);
 movieResults.addEventListener("click", movieDetail);
 forModal.addEventListener("click", disposeModal);
-clearButton.addEventListener('click', clearButtonHandler);
-
+clearButton.addEventListener("click", clearButtonHandler);
 
 init();
