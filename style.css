@@ -70,6 +70,12 @@ button:hover {
 #movieResults h2, #movieResults p {
     color: #000;
 }
+.card {
+    width: 92%;
+    margin-bottom: 0px;
+    box-sizing: border-box;
+    height: 92% 
+}
 
 .card-body:hover {
     box-shadow: inset 0px 0px 8px rgba(0, 0, 0, 0.8), 0 0 15px rgba(0, 0, 0, 0.8);
